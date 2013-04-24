@@ -121,3 +121,5 @@ You can of course still tap into the following phases:
 - -after-build-ios
 
 If you're on Windows and want to rebuild the Android and iOS projects, you'll need to delete the `_android.built` and `_ios.built` files that were placed in the root of your Sencha Touch app. These files are used as flags to know when the build process has completed. If you're on Mac, you won't need to do this as long as you install the `sencha` script.
+
+this is new fork
