@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="youdao">
+
+   <target name="-build-ios-youdao" depends="-check-dir-ios-youdao, -copy-ios-youdao, -help-ios-youdao, -config-ios-youdao">
+      <echo message="################## successfully ios package ${youdao.source.dir} #############" />
+   </target>
+
+  <target name="-check-dir-ios-youdao">
+      <echo message="################## ios package start #############" />
+      <condition property="youdao.source.dir" else="false">
+         <available file="${basedir}/youdao/resources" type="dir"/>
+      </condition>
+      
+      <condition property="youdao.source.help.dir" else="false">
+         <available file="${basedir}/youdao/resources/help" type="dir"/>
+      </condition>
+
+      <condition property="youdao.source.displayname" else="false">
+         <available file="${basedir}/youdao/displayname"/>
+      </condition>
+   </target>
+
+   <target name="-copy-ios-youdao" if="${youdao.source.dir}">
+      <echo message="copy files ${basedir}/youdao/resources" />
+      <echo message="to ${cordova.ios.project}/${cordova.ios.project.name}/Resources" />
+
+      <copy todir="${cordova.ios.project}/${cordova.ios.project.name}/Resources" overwrite="true">
+         <fileset dir="${basedir}/youdao/resources" />
+      </copy>
+   </target>
+
+    <target name="-help-ios-youdao" unless="${youdao.source.help.dir}">
+      <delete>
+         <fileset dir="${cordova.ios.project}/${cordova.ios.project.name}/Resources/help" includes="**/*"/>
+      </delete>
+   </target>
+
+    <target name="-config-ios-youdao" if="${youdao.source.displayname}">
+      <echo message="copy files ${youdao.source.displayname} " />
+      <copy file="${basedir}/youdao/displayname" tofile="${cordova.ios.project}/displayname" />
+      <exec executable="${cordova.ios.project}/cordova/config">
+      </exec>   
+   </target>
+
+<!-- ##################################### -->
+<!-- ############  Android  ############## -->
+<!-- ##################################### -->
+<!-- -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao -->
+   <target name="-build-android-youdao" depends="-check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao">
+      <echo message="################## successfully android package ${youdao.source.dir} #############" />
+   </target>
+
+   <target name="-check-dir-android-youdao">
+      <echo message="################## android package start #############" />
+      <condition property="youdao.source.dir" else="false">
+         <available file="${basedir}/youdao/res" type="dir"/>
+      </condition>
+      
+      <condition property="youdao.source.help.dir" else="false">
+         <or>
+            <available file="${basedir}/youdao/res/drawable/guide_1.jpg"/>
+            <available file="${basedir}/youdao/res/drawable/guide_1.png"/>
+         </or>
+      </condition>
+
+      <condition property="youdao.source.displayname" else="false">
+         <available file="${basedir}/youdao/displayname"/>
+      </condition>
+   </target>
+
+   <target name="-copy-android-youdao" if="${youdao.source.dir}">
+      <echo message="copy files ${basedir}/youdao/res" />
+      <echo message="to ${cordova.android.project}/res" />
+
+      <copy todir="${cordova.android.project}/res" overwrite="true">
+         <fileset dir="${basedir}/youdao/res" />
+      </copy>
+   </target>
+
+    <target name="-help-android-youdao" unless="${youdao.source.help.dir}">
+      <echo message="delete files ${cordova.android.project}/res/" />
+      <delete>
+         <fileset dir="${cordova.android.project}/res/drawable/" includes="guide*" casesensitive="false"/>
+      </delete>
+   </target>
+
+    <target name="-config-android-youdao" if="${youdao.source.displayname}">
+      <echo message="copy files ${youdao.source.displayname} " />
+      <copy file="${basedir}/youdao/displayname" tofile="${cordova.android.project}/displayname" />
+      <exec executable="${cordova.android.project}/cordova/config">
+      </exec>   
+   </target>
+   
+</project>
