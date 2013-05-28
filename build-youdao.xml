@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="youdao">
 
-   <target name="-build-ios-youdao" depends="-check-dir-ios-youdao, -copy-ios-youdao, -help-ios-youdao, -config-ios-youdao">
+
+<!-- ##################################### -->
+<!-- ############  Init  ############## -->
+<!-- ##################################### -->
+   <target name="-init-arg-properties" >
+      <dirname property="cordova.basedir" file="${ant.file.cordova}"/>
+      <property file="${basedir}/youdao/arg.properties"/>
+   </target>
+
+
+<!-- ##################################### -->
+<!-- ############  Android  ############## -->
+<!-- ##################################### -->
+   <target name="-build-ios-youdao" depends="-init-arg-properties, -check-dir-ios-youdao, -copy-ios-youdao, -help-ios-youdao, -config-ios-youdao">
       <echo message="################## successfully ios package ${youdao.source.dir} #############" />
    </target>
 
@@ -40,13 +53,17 @@
       <copy file="${basedir}/youdao/displayname" tofile="${cordova.ios.project}/displayname" />
       <exec executable="${cordova.ios.project}/cordova/config">
       </exec>   
+
+      <replaceregexp match="wx79474d05acb6a73b" replace="${cordova.ios.weixin}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
+
+      <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>      
    </target>
 
 <!-- ##################################### -->
 <!-- ############  Android  ############## -->
 <!-- ##################################### -->
 <!-- -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao -->
-   <target name="-build-android-youdao" depends="-check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao">
+   <target name="-build-android-youdao" depends="-init-arg-properties, -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao">
       <echo message="################## successfully android package ${youdao.source.dir} #############" />
    </target>
 
@@ -85,10 +102,15 @@
    </target>
 
     <target name="-config-android-youdao" if="${youdao.source.displayname}">
-      <echo message="copy files ${youdao.source.displayname} " />
+      <echo message="replace app name to ${cordova.app.name} " />
+      <!-- <replaceregexp  match="app_name\&quot;\&gt;.*\&lt;/" replace="app_name\&quot;\&gt;${cordova.app.name}\&lt;/" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/> -->
       <copy file="${basedir}/youdao/displayname" tofile="${cordova.android.project}/displayname" />
-      <exec executable="${cordova.android.project}/cordova/config">
-      </exec>   
+         <exec executable="${cordova.android.project}/cordova/config">
+      </exec>
+
+      <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+
+      <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
    </target>
    
 </project>
