@@ -56,7 +56,9 @@
 
       <replaceregexp match="wx79474d05acb6a73b" replace="${cordova.ios.weixin}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
 
-      <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>      
+      <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>    
+
+      <replaceregexp match="__APP_ID__" replace="${cordova.ios.appid}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Classes/Model/Setting.h"/>      
    </target>
 
 <!-- ##################################### -->
@@ -111,6 +113,10 @@
       <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
 
       <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+
+      <replaceregexp  match="jpushkey" replace="${cordova.android.jpush}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+
+      <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
    </target>
    
 </project>
