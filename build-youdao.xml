@@ -105,18 +105,20 @@
 
     <target name="-config-android-youdao" if="${youdao.source.displayname}">
       <echo message="replace app name to ${cordova.app.name} " />
-      <!-- <replaceregexp  match="app_name\&quot;\&gt;.*\&lt;/" replace="app_name\&quot;\&gt;${cordova.app.name}\&lt;/" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/> -->
+      <!-- <replaceregexp  match="app_name\&quot;\&gt;.*\&lt;/" replace="app_name\&quot;\&gt;${cordova.app.name}\&lt;/" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/> -->
       <copy file="${basedir}/youdao/displayname" tofile="${cordova.android.project}/displayname" />
-         <exec executable="${cordova.android.project}/cordova/config">
+      
+      <exec executable="${cordova.android.project}/cordova/config">
       </exec>
 
-      <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+      <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+      <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <replaceregexp  match="jpushkey" replace="${cordova.android.jpush}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+      <replaceregexp  match="jpushkey" replace="${cordova.android.jpush}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/strings.xml"/>
+      <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
+
    </target>
    
 </project>
