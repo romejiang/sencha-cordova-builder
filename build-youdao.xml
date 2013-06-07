@@ -119,6 +119,15 @@
 
       <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
+     <!--  <exec executable="native2ascii">
+       <arg value=" -encoding utf8 ${cordova.android.project}/assets/www/app.js ${cordova.android.project}/assets/www/app.js"/>
+      </exec> -->
+      <native2ascii encoding="UTF-8" src="${cordova.android.project}/assets/www/" dest="${cordova.android.project}/assets/www/" includes="app.js" ext=".utf8.js" />
+
+      <copy file="${cordova.android.project}/assets/www/app.utf8.js" tofile="${cordova.android.project}/assets/www/app.js" overwrite="true"/>
+             
+      <delete file="${cordova.android.project}/assets/www/app.utf8.js" />
+
    </target>
    
 </project>
