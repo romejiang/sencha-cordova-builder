@@ -24,6 +24,11 @@
       <condition property="cordova.os.is-unix" else="false">
          <os family="unix" />
       </condition>
+
+      <!-- check for mac -->
+      <condition property="cordova.os.is-mac" else="false">
+         <os family="mac" />
+      </condition>
    </target>
 
 
