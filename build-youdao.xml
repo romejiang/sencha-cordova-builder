@@ -137,7 +137,7 @@
 
       <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <replaceregexp  match="http://cloud.appmars.com/" replace="http://115.28.36.217/" flags="g" byline="true" file="${cordova.android.project}/assets/www/index.html"/>
+      <replaceregexp  match="http://cloud.appmars.com" replace="http://115.28.36.217" flags="g" byline="true" file="${cordova.android.project}/assets/www/index.html"/>
 
    </target>
 
