@@ -64,7 +64,7 @@
 
       <replaceregexp match="__APP_ID__" replace="${cordova.ios.appid}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Classes/Model/Setting.h"/>   
 
-      <replaceregexp  match="http://cloud.appmars.com/" replace="http://115.28.36.217/" flags="g" byline="true" file="${cordova.ios.project}/www/index.html"/>
+      <replaceregexp  match="http://cloud.appmars.com" replace="http://115.28.36.217" flags="g" byline="true" file="${cordova.ios.project}/www/index.html"/>
 
    </target>
 
