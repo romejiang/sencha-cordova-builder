@@ -114,7 +114,7 @@
       <echo message="app.json was restored successfully" />
 
       <echo message="deleting contents of ios web root ${cordova.ios.project.www}" />
-      <delete dir="${cordova.ios.project.www}" />
+      <delete dir="${cordova.ios.project.www}" excludes="error.html"/>
       <echo message="contents of ios web root deleted successfully" />
 
       <echo message="copying sencha build from ${build.dir}/${args.environment} to ios web root ${cordova.ios.project.www}" />

@@ -119,7 +119,7 @@
       <echo message="app.json was restored successfully" />
 
       <echo message="deleting contents of android web root ${cordova.android.project.www}" />
-      <delete dir="${cordova.android.project.www}" />
+      <delete dir="${cordova.android.project.www}" excludes="error.html"/>
       <echo message="contents of android web root deleted successfully" />
 
       <echo message="copying sencha build from ${build.dir}/${args.environment} to android web root ${cordova.android.project.www}" />
