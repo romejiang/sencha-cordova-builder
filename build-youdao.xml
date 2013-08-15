@@ -135,6 +135,11 @@
 
       <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
+
+      <replaceregexp  match="youdao.key" replace="${cordova.app.keyname}" flags="g" byline="true" file="${cordova.android.project}/project.properties"/>
+
+      <copy file="${basedir}/youdao/${cordova.app.keyname}" tofile="${cordova.android.project}/${cordova.app.keyname}" />
+
 <!--       <replaceregexp  match="http://cloud.appmars.com" replace="http://115.28.36.217" flags="g" byline="true" file="${cordova.android.project}/assets/www/index.html"/> -->
 
    </target>
