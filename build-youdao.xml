@@ -1,162 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="youdao">
 
-
-<!-- ##################################### -->
-<!-- ############  Init  ############## -->
-<!-- ##################################### -->
+   <!-- ##################################### -->
+   <!-- ############  Init  ############## -->
+   <!-- ##################################### -->
    <target name="-init-arg-properties" >
       <dirname property="cordova.basedir" file="${ant.file.cordova}"/>
       <property file="${basedir}/youdao/arg.properties"/>
+
    </target>
 
-
+ 
+ 
 
 <!-- ##################################### -->
 <!-- ############  IOS  ############## -->
 <!-- ##################################### -->
-   <target name="-build-ios-youdao" depends="-init-arg-properties, -check-dir-ios-youdao, -copy-ios-youdao, -help-ios-youdao, -config-ios-youdao, -update-version-ios-youdao">
-      <echo message="################## successfully ios package ${youdao.source.dir} #############" />
-   </target>
+<target name="-build-ios-youdao" depends="-init-arg-properties, -check-dir-ios-youdao, -copy-ios-youdao, -help-ios-youdao, -config-ios-youdao, -update-version-ios-youdao">
+   <echo message="################## successfully ios package ${youdao.source.dir} #############" />
+</target>
 
-  <target name="-check-dir-ios-youdao">
-      <echo message="################## ios package start #############" />
-      <condition property="youdao.source.dir" else="false">
-         <available file="${basedir}/youdao/resources" type="dir"/>
-      </condition>
-      
-      <condition property="youdao.source.help.dir" else="false">
-         <available file="${basedir}/youdao/resources/help" type="dir"/>
-      </condition>
+<target name="-check-dir-ios-youdao">
+   <echo message="################## ios package start #############" />
+   <condition property="youdao.source.dir" else="false">
+      <available file="${basedir}/youdao/resources" type="dir"/>
+   </condition>
 
-      <condition property="youdao.source.displayname" else="false">
-         <available file="${basedir}/youdao/displayname"/>
-      </condition>
+   <condition property="youdao.source.help.dir" else="false">
+      <available file="${basedir}/youdao/resources/help" type="dir"/>
+   </condition>
 
-      <condition property="youdao.version.update" else="false">
-         <isset property="cordova.app.version"/>
-      </condition>
-   </target>
+   <condition property="youdao.source.displayname" else="false">
+      <available file="${basedir}/youdao/displayname"/>
+   </condition>
 
-   <target name="-copy-ios-youdao" if="${youdao.source.dir}">
-      <echo message="copy files ${basedir}/youdao/resources" />
-      <echo message="to ${cordova.ios.project}/${cordova.ios.project.name}/Resources" />
+   <condition property="youdao.version.update" else="false">
+      <isset property="cordova.app.version"/>
+   </condition>
+</target>
 
-      <copy todir="${cordova.ios.project}/${cordova.ios.project.name}/Resources" overwrite="true">
-         <fileset dir="${basedir}/youdao/resources" />
-      </copy>
-   </target>
+<target name="-copy-ios-youdao" if="${youdao.source.dir}">
+   <echo message="copy files ${basedir}/youdao/resources" />
+   <echo message="to ${cordova.ios.project}/${cordova.ios.project.name}/Resources" />
 
-    <target name="-help-ios-youdao" unless="${youdao.source.help.dir}">
-      <delete>
-         <fileset dir="${cordova.ios.project}/${cordova.ios.project.name}/Resources/help" includes="**/*"/>
-      </delete>
-   </target>
+   <copy todir="${cordova.ios.project}/${cordova.ios.project.name}/Resources" overwrite="true">
+      <fileset dir="${basedir}/youdao/resources" />
+   </copy>
+</target>
 
-    <target name="-config-ios-youdao" if="${youdao.source.displayname}">
-      <echo message="copy files ${youdao.source.displayname} " />
-      <copy file="${basedir}/youdao/displayname" tofile="${cordova.ios.project}/displayname" />
-      <exec executable="${cordova.ios.project}/cordova/config" />   
+<target name="-help-ios-youdao" unless="${youdao.source.help.dir}">
+   <delete>
+      <fileset dir="${cordova.ios.project}/${cordova.ios.project.name}/Resources/help" includes="**/*"/>
+   </delete>
+</target>
 
-      <replaceregexp match="wx79474d05acb6a73b" replace="${cordova.ios.weixin}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
+<target name="-config-ios-youdao" if="${youdao.source.displayname}">
+   <echo message="copy files ${youdao.source.displayname} " />
+   <copy file="${basedir}/youdao/displayname" tofile="${cordova.ios.project}/displayname" />
+   <exec executable="${cordova.ios.project}/cordova/config" />
 
-      <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>    
+   <replaceregexp match="wx79474d05acb6a73b" replace="${cordova.ios.weixin}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
 
-      <replaceregexp match="__APP_ID__" replace="${cordova.ios.appid}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Classes/Model/Setting.h"/>   
+   <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
 
-   </target>
+   <replaceregexp match="__APP_ID__" replace="${cordova.ios.appid}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Classes/Model/Setting.h"/>
 
-   <target name="-update-version-ios-youdao" if="${youdao.version.update}">
-      <exec executable="${cordova.ios.project}/cordova/version" >
-         <arg line="${cordova.app.version}"/>
-      </exec>
-   </target> 
+   <replaceregexp match="nlWWUaDCdaK97khcCVNgoF8a" replace="${cordova.ios.baidupush}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Resources/BPushConfig.plist"/>
+
+</target>
+
+<target name="-update-version-ios-youdao" if="${youdao.version.update}">
+   <exec executable="${cordova.ios.project}/cordova/version" >
+      <arg line="${cordova.app.version}"/>
+   </exec>
+</target>
 
 <!-- ##################################### -->
 <!-- ############  Android  ############## -->
 <!-- ##################################### -->
 <!-- -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao -->
-   <target name="-build-android-youdao" depends="-init-arg-properties, -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao , -encoding-android-youdao , -update-version-android-youdao">
-      <echo message="################## successfully android package ${youdao.source.dir} #############" />
-   </target>
+<target name="-build-android-youdao" depends="-init-arg-properties, -check-dir-android-youdao, -copy-android-youdao, -help-android-youdao, -config-android-youdao , -encoding-android-youdao , -update-version-android-youdao">
+   <echo message="################## successfully android package ${youdao.source.dir} #############" />
+</target>
 
-   <target name="-check-dir-android-youdao">
-      <echo message="################## android package start #############" />
-      <condition property="youdao.source.dir" else="false">
-         <available file="${basedir}/youdao/res" type="dir"/>
-      </condition>
-      
-      <condition property="youdao.source.help.dir" else="false">
-         <or>
-            <available file="${basedir}/youdao/res/drawable/guide_1.jpg"/>
-            <available file="${basedir}/youdao/res/drawable/guide_1.png"/>
-         </or>
-      </condition>
+<target name="-check-dir-android-youdao">
+   <echo message="################## android package start #############" />
+   <condition property="youdao.source.dir" else="false">
+      <available file="${basedir}/youdao/res" type="dir"/>
+   </condition>
 
-      <condition property="youdao.source.displayname" else="false">
-         <available file="${basedir}/youdao/displayname"/>
-      </condition>
+   <condition property="youdao.source.help.dir" else="false">
+      <or>
+         <available file="${basedir}/youdao/res/drawable/guide_1.jpg"/>
+         <available file="${basedir}/youdao/res/drawable/guide_1.png"/>
+      </or>
+   </condition>
 
-      <condition property="youdao.version.update" else="false">
-         <isset property="cordova.app.version"/>
-      </condition>
+   <condition property="youdao.source.displayname" else="false">
+      <available file="${basedir}/youdao/displayname"/>
+   </condition>
 
-   </target>
+   <condition property="youdao.version.update" else="false">
+      <isset property="cordova.app.version"/>
+   </condition>
 
-   <target name="-copy-android-youdao" if="${youdao.source.dir}">
-      <echo message="copy files ${basedir}/youdao/res" />
-      <echo message="to ${cordova.android.project}/res" />
+</target>
 
-      <copy todir="${cordova.android.project}/res" overwrite="true">
-         <fileset dir="${basedir}/youdao/res" />
-      </copy>
-   </target>
+<target name="-copy-android-youdao" if="${youdao.source.dir}">
+   <echo message="copy files ${basedir}/youdao/res" />
+   <echo message="to ${cordova.android.project}/res" />
 
-    <target name="-help-android-youdao" unless="${youdao.source.help.dir}">
-      <echo message="delete files ${cordova.android.project}/res/" />
-      <delete>
-         <fileset dir="${cordova.android.project}/res/drawable/" includes="guide*" casesensitive="false"/>
-      </delete>
-   </target>
+   <copy todir="${cordova.android.project}/res" overwrite="true">
+      <fileset dir="${basedir}/youdao/res" />
+   </copy>
+</target>
 
-    <target name="-config-android-youdao" if="${youdao.source.displayname}">
-      <echo message="replace app name to ${cordova.app.name} " />
-       
-      <copy file="${basedir}/youdao/displayname" tofile="${cordova.android.project}/displayname" />
-      
-      <exec executable="${cordova.android.project}/cordova/config">
-      </exec>
+<target name="-help-android-youdao" unless="${youdao.source.help.dir}">
+   <echo message="delete files ${cordova.android.project}/res/" />
+   <delete>
+      <fileset dir="${cordova.android.project}/res/drawable/" includes="guide*" casesensitive="false"/>
+   </delete>
+</target>
 
-      <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
+<target name="-config-android-youdao" if="${youdao.source.displayname}">
+   <echo message="replace app name to ${cordova.app.name} " />
 
-      <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
+   <copy file="${basedir}/youdao/displayname" tofile="${cordova.android.project}/displayname" />
 
-      <replaceregexp  match="jpushkey" replace="${cordova.android.jpush}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
+   <exec executable="${cordova.android.project}/cordova/config"></exec>
 
-      <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
+   <replaceregexp  match="wxkey" replace="${cordova.android.weixin}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
+   <replaceregexp  match="umengkey" replace="${cordova.android.umeng}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <replaceregexp  match="youdao.key" replace="${cordova.app.keyname}" flags="g" byline="true" file="${cordova.android.project}/project.properties"/>
+   <replaceregexp  match="jpushkey" replace="${cordova.android.jpush}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-      <copy file="${basedir}/youdao/${cordova.app.keyname}" tofile="${cordova.android.project}/${cordova.app.keyname}" />
+   <replaceregexp  match="baidupushkey" replace="${cordova.android.baidupush}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-<!--       <replaceregexp  match="http://cloud.appmars.com" replace="http://115.28.36.217" flags="g" byline="true" file="${cordova.android.project}/assets/www/index.html"/> -->
+   <replaceregexp  match="appid" replace="${cordova.android.appid}" flags="g" byline="true" file="${cordova.android.project}/res/values/key_strings.xml"/>
 
-   </target>
+   <replaceregexp  match="youdao.key" replace="${cordova.app.keyname}" flags="g" byline="true" file="${cordova.android.project}/project.properties"/>
 
-   <target name="-encoding-android-youdao" if="${cordova.os.is-mac}">
-      
-      <echo message="unix == ${cordova.os.is-unix} | mac == ${cordova.os.is-mac}"/>
-      <native2ascii encoding="UTF-8" src="${cordova.android.project}/assets/www/" dest="${cordova.android.project}/assets/www/" includes="app.js" ext=".utf8.js" />
+   <copy file="${basedir}/youdao/${cordova.app.keyname}" tofile="${cordova.android.project}/${cordova.app.keyname}" />
 
-      <copy file="${cordova.android.project}/assets/www/app.utf8.js" tofile="${cordova.android.project}/assets/www/app.js" overwrite="true"/>
-             
-      <delete file="${cordova.android.project}/assets/www/app.utf8.js" />
-   </target> 
+   <!--       <replaceregexp  match="http://cloud.appmars.com" replace="http://115.28.36.217" flags="g" byline="true" file="${cordova.android.project}/assets/www/index.html"/>
+   -->
+</target>
 
-   <target name="-update-version-android-youdao" if="${youdao.version.update}">
-      <exec executable="${cordova.android.project}/cordova/version" >
-         <arg line="${cordova.app.version}"/>
-      </exec>
-   </target> 
+<target name="-encoding-android-youdao" if="${cordova.os.is-mac}">
+
+   <echo message="unix == ${cordova.os.is-unix} | mac == ${cordova.os.is-mac}"/>
+   <native2ascii encoding="UTF-8" src="${cordova.android.project}/assets/www/" dest="${cordova.android.project}/assets/www/" includes="app.js" ext=".utf8.js" />
+
+   <copy file="${cordova.android.project}/assets/www/app.utf8.js" tofile="${cordova.android.project}/assets/www/app.js" overwrite="true"/>
+
+   <delete file="${cordova.android.project}/assets/www/app.utf8.js" />
+</target>
+
+<target name="-update-version-android-youdao" if="${youdao.version.update}">
+   <exec executable="${cordova.android.project}/cordova/version" >
+      <arg line="${cordova.app.version}"/>
+   </exec>
+</target>
 </project>

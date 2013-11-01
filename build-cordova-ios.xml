@@ -108,7 +108,7 @@
 
 
 
-   <target name="-deploy-ios" depends="-is-ios-deploy-ready" if="${cordova.ios.deploy.ready}">
+   <target name="-deploy-ios" depends="-is-ios-deploy-ready , -init-arg-properties" if="${cordova.ios.deploy.ready}">
       <echo message="restoring app.json from backup app.json.bak" />
       <move file="${basedir}/app.json.bak" tofile="${basedir}/app.json" overwrite="true" />
       <echo message="app.json was restored successfully" />
@@ -117,9 +117,24 @@
       <delete dir="${cordova.ios.project.www}" excludes="error.html"/>
       <echo message="contents of ios web root deleted successfully" />
 
-      <echo message="copying sencha build from ${build.dir}/${args.environment} to ios web root ${cordova.ios.project.www}" />
+
+     <echo message="${cordova.sencha.version} === 2.3" />
+      <if>
+         <equals arg1="${cordova.sencha.version}" arg2="2.3" />
+         <then>
+            <property name="build.sencha.dir" value="${build.dir}" />
+            <echo message="################## ${build.sencha.dir}" />
+         </then>
+         <else>
+            <property name="build.sencha.dir" value="${build.dir}/${args.environment}" />
+            <echo message="##################else : ${build.sencha.dir}" />
+         </else>
+      </if>
+
+
+      <echo message="copying sencha build from ${build.sencha.dir} to ios web root ${cordova.ios.project.www}" />
       <copy todir="${cordova.ios.project.www}">
-         <fileset dir="${build.dir}/${args.environment}" />
+         <fileset dir="${build.sencha.dir}" />
       </copy>
       <echo message="sencha build copied to ios web root successfully" />
 

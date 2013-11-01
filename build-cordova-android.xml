@@ -16,14 +16,12 @@
    <import file="check-cordova.xml" />
    <import file="util-cordova.xml" />
 
-
-
    <!-- overridables -->
    <target name="-before-init-android" />
    <target name="-after-init-android" />
    <target name="-before-build-android" />
    <target name="-after-build-android" />
-   
+
    <target name="-before-init-android-internal" if="${cordova.android.init.ready}">
       <antcall target="-before-init-android" />
    </target>
@@ -39,8 +37,6 @@
    <target name="-after-build-android-internal" unless="${cordova.android.built}">
       <antcall target="-after-build-android" />
    </target>
-
-
 
    <target name="-init-android-internal" if="${cordova.android.init.ready}">
       <echo message="initializating android build..." />
@@ -77,8 +73,6 @@
       <copy file="${cordova.android.tools.js}" tofile="${cordova.android.project.js}" />
    </target>
 
-
-
    <target name="-build-android-internal" unless="${cordova.android.built}">
       <echo message="building android..." />
 
@@ -111,9 +105,7 @@
       </exec>
    </target>
 
-
-
-   <target name="-deploy-android" depends="-is-android-deploy-ready" if="${cordova.android.deploy.ready}">
+   <target name="-deploy-android" depends="-is-android-deploy-ready, -init-arg-properties" if="${cordova.android.deploy.ready}">
       <echo message="restoring app.json from backup app.json.bak" />
       <move file="${basedir}/app.json.bak" tofile="${basedir}/app.json" overwrite="true" />
       <echo message="app.json was restored successfully" />
@@ -122,10 +114,25 @@
       <delete dir="${cordova.android.project.www}" excludes="error.html"/>
       <echo message="contents of android web root deleted successfully" />
 
-      <echo message="copying sencha build from ${build.dir}/${args.environment} to android web root ${cordova.android.project.www}" />
+      <echo message="${cordova.sencha.version} === 2.3" />
+      <if>
+         <equals arg1="${cordova.sencha.version}" arg2="2.3" />
+         <then>
+            <property name="build.sencha.dir" value="${build.dir}" />
+            <echo message="################## ${build.sencha.dir}" />
+         </then>
+         <else>
+            <property name="build.sencha.dir" value="${build.dir}/${args.environment}" />
+            <echo message="##################else : ${build.sencha.dir}" />
+         </else>
+      </if>
+
+      <echo message="copying sencha build from ${build.sencha.dir} to android web root ${cordova.android.project.www}" />
+
       <copy todir="${cordova.android.project.www}">
-         <fileset dir="${build.dir}/${args.environment}" />
+         <fileset dir="${build.sencha.dir}" />
       </copy>
+
       <echo message="sencha build copied to android web root successfully" />
 
       <echo message="removing android deploy flag..." />
