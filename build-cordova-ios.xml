@@ -49,9 +49,8 @@
       <echo message="project namespace: ${cordova.ios.project.namespace}" />
       <echo message="project name: ${cordova.ios.project.name}" />
       
-      <echo message="create path : ${cordova.ios.tools.bin.create}" />
        <!--创建打包的文件夹-->
-      <mkdir dir="${cordova.ios.project}"/>
+      <mkdir dir="${cordova.ios.basebuild}"/>
       
       <exec executable="${cordova.ios.tools.bin.create}">
          <arg value="${cordova.ios.project}" />
