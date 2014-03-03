@@ -40,7 +40,7 @@
       <antcall target="-after-build-ios" />
    </target>
 
-
+   
 
    <target name="-init-ios-internal" if="${cordova.ios.init.ready}">
       <echo message="initializating ios build..." />
@@ -48,13 +48,17 @@
       <echo message="project path: ${cordova.ios.project}" />
       <echo message="project namespace: ${cordova.ios.project.namespace}" />
       <echo message="project name: ${cordova.ios.project.name}" />
-
+      
+      <echo message="create path : ${cordova.ios.tools.bin.create}" />
+       <!--创建打包的文件夹-->
+      <mkdir dir="${cordova.ios.project}"/>
+      
       <exec executable="${cordova.ios.tools.bin.create}">
          <arg value="${cordova.ios.project}" />
          <arg value="${cordova.ios.project.namespace}" />
          <arg value="${cordova.ios.project.name}" />
       </exec>
-
+      
       <echo message="ios project successfully created at ${cordova.ios.project}" />
 
       <script language="javascript">

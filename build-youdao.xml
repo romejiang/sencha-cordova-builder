@@ -37,6 +37,11 @@
    <condition property="youdao.version.update" else="false">
       <isset property="cordova.app.version"/>
    </condition>
+
+    <condition property="baidu.push.plist" else="false">
+      <available file="${cordova.ios.project}/${cordova.ios.project.name}/Resources/BPushConfig.plist"  type= "file"/>
+   </condition>
+
 </target>
 
 <target name="-copy-ios-youdao" if="${youdao.source.dir}">
@@ -64,9 +69,15 @@
    <replaceregexp match="508a19a35270155ced00005f" replace="${cordova.ios.umeng}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}.xcodeproj/project.pbxproj"/>
 
    <replaceregexp match="__APP_ID__" replace="${cordova.ios.appid}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Classes/Model/Setting.h"/>
-
-   <replaceregexp match="nlWWUaDCdaK97khcCVNgoF8a" replace="${cordova.ios.baidupush}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Resources/BPushConfig.plist"/>
-
+   
+   <if>
+      <equals arg1="${baidu.push.plist}" arg2="true" />
+      <then>
+         <echo message="################## baidu push replace ${baidu.push.plist}" />
+         <replaceregexp match="nlWWUaDCdaK97khcCVNgoF8a" replace="${cordova.ios.baidupush}" flags="g" byline="true" file="${cordova.ios.project}/${cordova.ios.project.name}/Resources/BPushConfig.plist"/>
+      </then>
+    </if>
+    
 </target>
 
 <target name="-update-version-ios-youdao" if="${youdao.version.update}">
